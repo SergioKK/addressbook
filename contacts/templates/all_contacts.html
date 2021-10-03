@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<header class="header">
+
+    <form class="search-bar">
+        <input type="search-name" class="contact-search" name="search-area" placeholder="Search"
+               value="{{ search_input }}">
+    </form>
+
+</header>
+<table class='table table-borderless'>
+    <thead class="border-bottom font-weight-bold">
+    <tr>
+        <td>first name</td>
+        <td>last name</td>
+        <td>phone number</td>
+        <td>contact url</td>
+        <td>photo</td>
+
+        <td><a href="{% url 'contacts:contact_insert' %}" class="btn btn-outline-success">
+            <i class="fas fa-plus"></i> Add contact
+        </a></td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for contact in contacts %}
+    <tr>
+        <td>{{ contact.first_name }}</td>
+        <td>{{ contact.last_name }}</td>
+        <td>{{ contact.phone_number }}</td>
+        <td>{{ contact.contact_url }}</td>
+        <td><img src="{% static contact.photo.url %}"></td>
+
+        <td>
+
+            <a href="{% url 'contacts:contact_update' contact.id %}" class="btn text-secondary px-0">
+                <i class="far fa-edit fa-lg">Update</i>
+            </a>
+
+        </td>
+        <td>
+
+            <form action="{% url 'contacts:contact_delete' contact.id %}" method="post"
+                  class="d-inline">
+
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn">
+                    <i class="far fa-trash-alt fa-lg text-danger float-right"> Delete</i>
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <h3>No contacts found</h3>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
