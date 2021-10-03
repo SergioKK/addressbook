@@ -1,6 +1,6 @@
-###django-contacts-book
+### django-contacts-book
 
-###Contact Book features:
+### Contact Book features:
 
 1. Create, update, delete contacts
 2. Search in the contact book
